@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
-import 'votingDetails.dart';
+import 'VotingDetails.dart';
 import 'main.dart';
 import 'DataPage.dart';
 import 'dart:async';
@@ -591,5 +591,6 @@ void _exportToExcel() {
 
   html.Url.revokeObjectUrl(url);
 }
+
 
 }

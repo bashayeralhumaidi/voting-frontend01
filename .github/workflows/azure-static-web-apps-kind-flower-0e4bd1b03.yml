@@ -18,7 +18,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: '3.27.0'
 
       - name: Enable Web
         run: flutter config --enable-web
@@ -37,3 +37,4 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: "build/web"
+

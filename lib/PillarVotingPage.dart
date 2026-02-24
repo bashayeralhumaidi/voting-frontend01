@@ -37,6 +37,8 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
   final List<int> weights = [25, 20, 15, 20, 20];
 
   List<int> ratings = [0, 0, 0, 0, 0];
+  List<TextEditingController> commentControllers =
+    List.generate(5, (_) => TextEditingController());
   bool isSubmitting = false;
   bool alreadySubmitted = false;
 
@@ -88,6 +90,8 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
           "username": widget.username,
           "category": categories[i],
           "score": ratings[i],
+          "comment": commentControllers[i].text.trim(),
+
         }),
       );
     }
@@ -266,47 +270,62 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
     );
   }
 
-  Widget _buildStarRow(String title, int index) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
+ Widget _buildStarRow(String title, int index) {
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 25),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: List.generate(5, (starIndex) {
-                return IconButton(
-                  icon: Icon(
-                    starIndex < ratings[index]
-                        ? Icons.star
-                        : Icons.star_border,
-                    color: Colors.amber,
-                  ),
-                  onPressed: alreadySubmitted
-                      ? null
-                      : () {
-                          setState(() {
-                            ratings[index] =
-                                starIndex + 1;
-                          });
-                        },
-                );
-              }),
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: List.generate(5, (starIndex) {
+                  return IconButton(
+                    icon: Icon(
+                      starIndex < ratings[index]
+                          ? Icons.star
+                          : Icons.star_border,
+                      color: Colors.amber,
+                    ),
+                    onPressed: alreadySubmitted
+                        ? null
+                        : () {
+                            setState(() {
+                              ratings[index] = starIndex + 1;
+                            });
+                          },
+                  );
+                }),
+              ),
             ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        TextField(
+          controller: commentControllers[index],
+          maxLines: 2,
+          enabled: !alreadySubmitted,
+          decoration: const InputDecoration(
+            hintText: "Add comment...",
+            border: OutlineInputBorder(),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 }
+}
+
 

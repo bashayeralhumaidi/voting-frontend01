@@ -152,7 +152,7 @@ class _DataPageState extends State<DataPage> {
                         _HeaderCell("AI Initiative Title", 200),
                         _HeaderCell("Summary of AI Solution", 400),
                         _HeaderCell("Business Impact Explanation", 400),
-                        _HeaderCell("File Path", 200),
+                        _HeaderCell("1.File Path", 200),
                         _HeaderCell("Action", 150),
                       ],
                     ),
@@ -346,3 +346,4 @@ class _ActionCell extends StatelessWidget {
     );
   }
 }
+

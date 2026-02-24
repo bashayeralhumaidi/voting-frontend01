@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'dart:html' as html;
 
 class PillarVotingPage extends StatefulWidget {
   final String title;
@@ -162,9 +163,31 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
                       Text("Impact:\n${widget.impact}",
                           style: const TextStyle(fontSize: 18)),
                       const SizedBox(height: 20),
-                      Text("File Path: ${widget.file}",
-                          style: const TextStyle(fontSize: 18)),
-                    ],
+                        Row(
+                            children: [
+                              const Text(
+                                "File: ",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              widget.file.isEmpty
+                                  ? const Text("-",
+                                      style: TextStyle(fontSize: 18))
+                                  : InkWell(
+                                      onTap: () {
+                                        html.window.open(widget.file, "_blank");
+                                      },
+                                      child: const Text(
+                                        "Open File",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.blue,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                                            ],
                   ),
                 ),
               ),
@@ -251,7 +274,7 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
           Expanded(
             flex: 3,
             child: Text(
-              "$title (${weights[index]}%)",
+              title,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -286,3 +309,4 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
     );
   }
 }
+

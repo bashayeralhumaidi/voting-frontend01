@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:voting/AdminPage.dart';
 import 'package:voting/main.dart';
+import 'dart:html' as html;
 
 class VotingDetailsPage extends StatelessWidget {
   final dynamic project;
@@ -114,8 +115,30 @@ class VotingDetailsPage extends StatelessWidget {
                       Text("Impact:\n$impact",
                           style: const TextStyle(fontSize: 18)),
                       const SizedBox(height: 20),
-                      Text("File Path: $filePath",
-                          style: const TextStyle(fontSize: 18)),
+                      Row(
+                        children: [
+                          const Text(
+                            "File: ",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          filePath.isEmpty
+                              ? const Text("-",
+                                  style: TextStyle(fontSize: 18))
+                              : InkWell(
+                                  onTap: () {
+                                    html.window.open(filePath, "_blank");
+                                  },
+                                  child: const Text(
+                                    "Open File",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.blue,
+                                      decoration: TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -186,3 +209,4 @@ class VotingDetailsPage extends StatelessWidget {
     );
   }
 }
+

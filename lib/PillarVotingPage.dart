@@ -208,6 +208,7 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
                   border: Border.all(color: primaryColor),
                   borderRadius: BorderRadius.circular(12),
                 ),
+               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment:
                       CrossAxisAlignment.start,
@@ -237,7 +238,6 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
                     //   ),
                     // ),
 
-                    const Spacer(),
 
                     Center(
                       child: ElevatedButton(
@@ -263,6 +263,7 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
                   ],
                 ),
               ),
+                ),
             ),
           ],
         ),

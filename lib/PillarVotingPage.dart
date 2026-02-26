@@ -157,16 +157,64 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
                           color: primaryColor,
                         ),
                       ),
-                      const SizedBox(height: 30),
-                      Text("Title: ${widget.title}",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
-                      Text("Solution:\n${widget.solution}",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
-                      Text("Impact:\n${widget.impact}",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
+                     const SizedBox(height: 30),
+
+// TITLE
+RichText(
+  text: TextSpan(
+    style: const TextStyle(fontSize: 18, color: Colors.black),
+    children: [
+      const TextSpan(
+        text: "Al Initiative Title: ",
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      TextSpan(text: widget.title),
+    ],
+  ),
+),
+
+const SizedBox(height: 20),
+
+// SOLUTION
+RichText(
+  text: TextSpan(
+    style: const TextStyle(fontSize: 18, color: Colors.black),
+    children: [
+      const TextSpan(
+        text: "Summary of Al Solution:\n",
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      TextSpan(text: widget.solution),
+    ],
+  ),
+),
+
+const SizedBox(height: 20),
+
+// IMPACT
+RichText(
+  text: TextSpan(
+    style: const TextStyle(fontSize: 18, color: Colors.black),
+    children: [
+      const TextSpan(
+        text: "Business Impact Explanation:\n",
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      TextSpan(text: widget.impact),
+    ],
+  ),
+),
+
+const SizedBox(height: 20),
                         Row(
                             children: [
                               const Text(
@@ -328,5 +376,6 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
   );
 }
 }
+
 
 

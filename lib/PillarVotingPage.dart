@@ -136,122 +136,118 @@ class _PillarVotingPageState extends State<PillarVotingPage> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // LEFT SIDE
-            Expanded(
-              flex: 2,
-              child: Container(
-                padding: const EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  border: Border.all(color: primaryColor),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Initiative Details",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: primaryColor,
-                        ),
-                      ),
-                     const SizedBox(height: 30),
-
-// TITLE
-RichText(
-  text: TextSpan(
-    style: const TextStyle(fontSize: 18, color: Colors.black),
-    children: [
-      const TextSpan(
-        text: "Al Initiative Title: ",
-        style: TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      TextSpan(text: widget.title),
-    ],
-  ),
-),
-
-const SizedBox(height: 20),
-
-// SOLUTION
-RichText(
-  text: TextSpan(
-    style: const TextStyle(fontSize: 18, color: Colors.black),
-    children: [
-      const TextSpan(
-        text: "Summary of Al Solution:\n",
-        style: TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      TextSpan(text: widget.solution),
-    ],
-  ),
-),
-
-const SizedBox(height: 20),
-
-// IMPACT
-RichText(
-  text: TextSpan(
-    style: const TextStyle(fontSize: 18, color: Colors.black),
-    children: [
-      const TextSpan(
-        text: "Business Impact Explanation:\n",
-        style: TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      TextSpan(text: widget.impact),
-    ],
-  ),
-),
-
-const SizedBox(height: 20),
-
-// FILE
-RichText(
-  text: TextSpan(
-    style: const TextStyle(fontSize: 18, color: Colors.black),
-    children: [
-      const TextSpan(
-        text: "File: ",
-        style: TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      widget.file.isEmpty
-          ? const TextSpan(text: "-")
-          : TextSpan(
-              text: "Open File",
-              style: const TextStyle(
-                color: Colors.blue,
-                decoration: TextDecoration.underline,
-              ),
-              recognizer: (TapGestureRecognizer()
-                ..onTap = () {
-                  html.window.open(widget.file, "_blank");
-                }),
+           Expanded(
+  flex: 2,
+  child: Container(
+    padding: const EdgeInsets.all(30),
+    decoration: BoxDecoration(
+      border: Border.all(color: primaryColor),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Initiative Details",
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: primaryColor,
             ),
-    ],
-  ),
-),
-                            ],
-                          ),
-),
+          ),
+          const SizedBox(height: 30),
+
+          // TITLE
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+              children: [
+                const TextSpan(
+                  text: "AI Initiative Title: ",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
+                TextSpan(text: widget.title),
+              ],
             ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // SOLUTION
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+              children: [
+                const TextSpan(
+                  text: "Summary of AI Solution:\n",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(text: widget.solution),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // IMPACT
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+              children: [
+                const TextSpan(
+                  text: "Business Impact Explanation:\n",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                TextSpan(text: widget.impact),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 20),
+
+          // FILE
+          RichText(
+            text: TextSpan(
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+              children: [
+                const TextSpan(
+                  text: "File: ",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                widget.file.isEmpty
+                    ? const TextSpan(text: "-")
+                    : TextSpan(
+                        text: "Open File",
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            html.window.open(widget.file, "_blank");
+                          },
+                      ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  ),
+),
 
             const SizedBox(width: 40),
 
@@ -384,6 +380,7 @@ RichText(
   );
 }
 }
+
 
 
 

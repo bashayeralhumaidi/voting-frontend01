@@ -106,37 +106,93 @@ class VotingDetailsPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      Text("Title: $title",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
-                      Text("Solution:\n$solution",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
-                      Text("Impact:\n$impact",
-                          style: const TextStyle(fontSize: 18)),
-                      const SizedBox(height: 20),
-                      Row(
-                        children: [
-                          const Text(
-                            "File: ",
-                            style: TextStyle(fontSize: 18),
+            // TITLE
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+                children: [
+                  const TextSpan(
+                    text: "AI Initiative Title: ",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(text: title),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // SOLUTION
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+                children: [
+                  const TextSpan(
+                    text: "Summary of AI Solution:\n",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(text: solution),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // IMPACT
+            RichText(
+              text: TextSpan(
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+                children: [
+                  const TextSpan(
+                    text: "Business Impact Explanation:\n",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(text: impact),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // FILE
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "File: ",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                filePath.isEmpty
+                    ? const Text(
+                        "-",
+                        style: TextStyle(fontSize: 18),
+                      )
+                    : InkWell(
+                        onTap: () {
+                          html.window.open(filePath, "_blank");
+                        },
+                        child: const Text(
+                          "Open File",
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
                           ),
-                          filePath.isEmpty
-                              ? const Text("-",
-                                  style: TextStyle(fontSize: 18))
-                              : InkWell(
-                                  onTap: () {
-                                    html.window.open(filePath, "_blank");
-                                  },
-                                  child: const Text(
-                                    "Open File",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.blue,
-                                      decoration: TextDecoration.underline,
-                                    ),
-                                  ),
-                                ),
+                        ),
+                      ),
                         ],
                       ),
                     ],
@@ -209,4 +265,5 @@ class VotingDetailsPage extends StatelessWidget {
     );
   }
 }
+
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:html' as html;
+import 'package:flutter/gestures.dart';
 
 class PillarVotingPage extends StatefulWidget {
   final String title;
@@ -215,31 +216,38 @@ RichText(
 ),
 
 const SizedBox(height: 20),
-                        Row(
-                            children: [
-                              const Text(
-                                "File: ",
-                                style: TextStyle(fontSize: 18),
-                              ),
-                              widget.file.isEmpty
-                                  ? const Text("-",
-                                      style: TextStyle(fontSize: 18))
-                                  : InkWell(
-                                      onTap: () {
-                                        html.window.open(widget.file, "_blank");
-                                      },
-                                      child: const Text(
-                                        "Open File",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.blue,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                    ),
+
+// FILE
+RichText(
+  text: TextSpan(
+    style: const TextStyle(fontSize: 18, color: Colors.black),
+    children: [
+      const TextSpan(
+        text: "File: ",
+        style: TextStyle(
+          color: Colors.blue,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      widget.file.isEmpty
+          ? const TextSpan(text: "-")
+          : TextSpan(
+              text: "Open File",
+              style: const TextStyle(
+                color: Colors.blue,
+                decoration: TextDecoration.underline,
+              ),
+              recognizer: (TapGestureRecognizer()
+                ..onTap = () {
+                  html.window.open(widget.file, "_blank");
+                }),
+            ),
+    ],
+  ),
+),
                             ],
                           ),
-                                            ],
+
                   ),
                 ),
               ),
@@ -376,6 +384,7 @@ const SizedBox(height: 20),
   );
 }
 }
+
 
 
 

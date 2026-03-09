@@ -32,44 +32,7 @@ class _LoginIntroPageState extends State<LoginIntroPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> login() async {
-  int retry = 0;
-
-  while (retry < 3) {
-    try {
-      final response = await http.post(
-        Uri.parse("https://voting-c6gqfjhxffbucyfy.westeurope-01.azurewebsites.net/login"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "username": usernameController.text.trim(),
-          "password": passwordController.text.trim(),
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data["success"] == true) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => DataPage(username: usernameController.text.trim()),
-            ),
-          );
-          return;
-        }
-      }
-
-    } catch (e) {}
-
-    retry++;
-    await Future.delayed(const Duration(seconds: 5));
-  }
-
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text("Server waking up, try again")),
-  );
-}
+Future<void> login() async { try { final response = await http.post( Uri.parse("https://voting-c6gqfjhxffbucyfy.westeurope-01.azurewebsites.net/login"), headers: {"Content-Type": "application/json"}, body: jsonEncode({ "username": usernameController.text.trim(), "password": passwordController.text.trim(), }), ); if (response.statusCode == 200) { final data = jsonDecode(response.body); if (data["success"] == true) { Navigator.push( context, MaterialPageRoute( builder: (_) => DataPage( username: usernameController.text.trim(), ), ), ); } else { ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Invalid credentials")), ); } } else { ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Invalid username or password")), ); } } catch (e) { ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Connection error")), ); } }
 
   @override
   Widget build(BuildContext context) {
@@ -249,5 +212,6 @@ class _LoginIntroPageState extends State<LoginIntroPage> {
     );
   }
 }
+
 
 

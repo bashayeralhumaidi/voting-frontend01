@@ -33,6 +33,9 @@ class _LoginIntroPageState extends State<LoginIntroPage> {
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> login() async {
+  int retry = 0;
+
+  while (retry < 3) {
     try {
       final response = await http.post(
         Uri.parse("https://voting-c6gqfjhxffbucyfy.westeurope-01.azurewebsites.net/login"),
@@ -50,28 +53,23 @@ class _LoginIntroPageState extends State<LoginIntroPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => DataPage(
-                username: usernameController.text.trim(),
-              ),
+              builder: (_) => DataPage(username: usernameController.text.trim()),
             ),
-
           );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Invalid credentials")),
-          );
+          return;
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Invalid username or password")),
-        );
       }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Connection error")),
-      );
-    }
+
+    } catch (e) {}
+
+    retry++;
+    await Future.delayed(const Duration(seconds: 5));
   }
+
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(content: Text("Server waking up, try again")),
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -251,4 +249,5 @@ class _LoginIntroPageState extends State<LoginIntroPage> {
     );
   }
 }
+
 

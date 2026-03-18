@@ -64,6 +64,24 @@ Future<void> login() async {
     );
   }
 }
+  Future<http.Response> postWithRetry() async {
+  for (int i = 0; i < 3; i++) {
+    try {
+      final res = await http.post(
+        Uri.parse("https://voting-c6gqfjhxffbucyfy.westeurope-01.azurewebsites.net/login"),
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode({
+          "username": usernameController.text.trim(),
+          "password": passwordController.text.trim(),
+        }),
+      );
+      return res;
+    } catch (_) {
+      await Future.delayed(const Duration(seconds: 2));
+    }
+  }
+  throw Exception("Failed after retries");
+}
   @override
   Widget build(BuildContext context) {
     const primaryColor = Color(0xFF004667);

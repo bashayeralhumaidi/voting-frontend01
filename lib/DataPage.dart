@@ -4,9 +4,9 @@ import 'package:voting/AdminPage.dart';
 import 'package:voting/main.dart';
 import 'dart:convert';
 import 'PillarVotingPage.dart';
+import 'Re-Vote.dart';
 
 import 'dart:html' as html;
-
 
 class DataPage extends StatefulWidget {
   final String username;
@@ -85,7 +85,6 @@ class _DataPageState extends State<DataPage> {
         iconTheme: const IconThemeData(color: Colors.white),
         title: Row(
           children: [
-     
             Image.asset("assets/JulpharAI_Logo_white.png", height: 40),
             const SizedBox(width: 15),
             const Text(
@@ -95,22 +94,22 @@ class _DataPageState extends State<DataPage> {
           ],
         ),
         actions: [
-           if (widget.username == "Admin" || widget.username == "10006761")
-    TextButton(
-      onPressed: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const AdminPage(),
-          ),
-          (route) => false,
-        );
-      },
-      child: const Text(
-        "💻 Admin",
-        style: TextStyle(color: Colors.white),
-      ),
-    ),
+          if (widget.username == "Admin" || widget.username == "10006761")
+            TextButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AdminPage(),
+                  ),
+                  (route) => false,
+                );
+              },
+              child: const Text(
+                "💻 Admin",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           TextButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(
@@ -153,12 +152,11 @@ class _DataPageState extends State<DataPage> {
                         _HeaderCell("Summary of AI Solution", 400),
                         _HeaderCell("Business Impact Explanation", 400),
                         _HeaderCell("File Path", 200),
-                        _HeaderCell("Action", 150),
+                        _HeaderCell("Action", 280),
                       ],
                     ),
                     Column(
-                      children:
-                          initiatives.asMap().entries.map((entry) {
+                      children: initiatives.asMap().entries.map((entry) {
                         int index = entry.key;
                         var item = entry.value;
 
@@ -172,32 +170,42 @@ class _DataPageState extends State<DataPage> {
                               _DataCell(item["title"], 200),
                               _DataCell(item["solution"], 400),
                               _DataCell(item["impact"], 400),
-                              _FileLinkCell(item["file"], 200),                              _ActionCell(
-                                width: 150,
-                                onPressed: item["submitted"] == true
-                                    ? null
-                                    : () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) =>
-                                                PillarVotingPage(
-                                              title: item["title"],
-                                              solution:
-                                                  item["solution"],
-                                              impact:
-                                                  item["impact"],
-                                              username:
-                                                  widget.username,
-                                              file:
-                                                  item["file"] ??
-                                                      "-",
-                                            ),
-                                          ),
-                                        ).then((_) {
-                                          fetchInitiatives();
-                                        });
-                                      },
+                              _FileLinkCell(item["file"], 200),
+                              _ActionCell(
+                                width: 280,
+                                isSubmitted: item["submitted"] == true,
+                                onVotePressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => PillarVotingPage(
+                                        title: item["title"],
+                                        solution: item["solution"],
+                                        impact: item["impact"],
+                                        username: widget.username,
+                                        file: item["file"] ?? "-",
+                                      ),
+                                    ),
+                                  ).then((_) {
+                                    fetchInitiatives();
+                                  });
+                                },
+                                onRevotePressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ReVotePage(
+                                        title: item["title"],
+                                        solution: item["solution"],
+                                        impact: item["impact"],
+                                        username: widget.username,
+                                        file: item["file"] ?? "-",
+                                      ),
+                                    ),
+                                  ).then((_) {
+                                    fetchInitiatives();
+                                  });
+                                },
                               ),
                             ],
                           ),
@@ -304,9 +312,8 @@ class _FileLinkCell extends StatelessWidget {
           ? const Text("-")
           : InkWell(
               onTap: () {
-  html.window.open(url!, "_blank");
-},
-
+                html.window.open(url!, "_blank");
+              },
               child: const Text(
                 "Open File",
                 style: TextStyle(
@@ -319,12 +326,18 @@ class _FileLinkCell extends StatelessWidget {
   }
 }
 
-
 class _ActionCell extends StatelessWidget {
   final double width;
-  final VoidCallback? onPressed;
+  final bool isSubmitted;
+  final VoidCallback onVotePressed;
+  final VoidCallback onRevotePressed;
 
-  const _ActionCell({required this.width, required this.onPressed});
+  const _ActionCell({
+    required this.width,
+    required this.isSubmitted,
+    required this.onVotePressed,
+    required this.onRevotePressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -335,16 +348,34 @@ class _ActionCell extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade400),
       ),
-      child: ElevatedButton(
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          backgroundColor:
-              onPressed == null ? Colors.grey : const Color.fromARGB(255, 255, 255, 255),
-        ),
-        child: Text(onPressed == null ? "Submitted" : "Vote"),
-      ),
+      child: isSubmitted
+          ? Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 10,
+              runSpacing: 10,
+              children: [
+                ElevatedButton(
+                  onPressed: null,
+                  child: const Text("Submitted"),
+                ),
+                ElevatedButton(
+                  onPressed: onRevotePressed,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF004667),
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text("Re-Vote"),
+                ),
+              ],
+            )
+          : ElevatedButton(
+              onPressed: onVotePressed,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black,
+              ),
+              child: const Text("Vote"),
+            ),
     );
   }
 }
-
-

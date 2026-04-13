@@ -95,7 +95,7 @@ class _DataPageState extends State<DataPage> {
           ],
         ),
         actions: [
-           if (widget.username == "Admin" || wideget.username == "10006761")
+           if (widget.username == "Admin" || widget.username == "10006761")
     TextButton(
       onPressed: () {
         Navigator.pushAndRemoveUntil(
